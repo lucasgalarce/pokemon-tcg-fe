@@ -13,10 +13,8 @@ const AddPokemon: React.FC = () => {
   );
   const [rarity, setRarity] = useState<PokemonRarity>(PokemonRarity.COMMON);
   const [originalAttackDmg, setOriginalAttackDmg] = useState<string>("");
-  const [weakness, setWeakness] = useState<PokemonType>(PokemonType.COLORLESS);
-  const [resistance, setResistance] = useState<PokemonType>(
-    PokemonType.COLORLESS,
-  );
+  const [weakness, setWeakness] = useState<PokemonType | null>(null);
+  const [resistance, setResistance] = useState<PokemonType | null>(null);
   const [imageUrl, setImageUrl] = useState("");
   const queryClient = useQueryClient();
 
@@ -145,11 +143,15 @@ const AddPokemon: React.FC = () => {
           Weakness
         </label>
         <select
-          value={weakness}
-          onChange={(e) => setWeakness(e.target.value as PokemonType)}
+          value={weakness || ""}
+          onChange={(e) =>
+            setWeakness(
+              e.target.value === "" ? null : (e.target.value as PokemonType),
+            )
+          }
           className="w-full rounded-lg border px-3 py-2"
-          required
         >
+          <option value="">None</option>
           {Object.values(PokemonType).map((type) => (
             <option key={type} value={type}>
               {type}
@@ -162,11 +164,15 @@ const AddPokemon: React.FC = () => {
           Resistance
         </label>
         <select
-          value={resistance}
-          onChange={(e) => setResistance(e.target.value as PokemonType)}
+          value={resistance || ""}
+          onChange={(e) =>
+            setResistance(
+              e.target.value === "" ? null : (e.target.value as PokemonType),
+            )
+          }
           className="w-full rounded-lg border px-3 py-2"
-          required
         >
+          <option value="">None</option>
           {Object.values(PokemonType).map((type) => (
             <option key={type} value={type}>
               {type}
@@ -183,7 +189,6 @@ const AddPokemon: React.FC = () => {
           value={imageUrl}
           onChange={(e) => setImageUrl(e.target.value)}
           className="w-full rounded-lg border px-3 py-2"
-          required
         />
       </div>
       <button

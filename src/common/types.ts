@@ -6,8 +6,8 @@ export interface CreatePokemonCardType {
   expansion: string;
   rarity: string;
   weakness: string | null;
-  resistance: string | null;
-  imageUrl: string | null;
+  resistance?: string | null;
+  imageUrl?: string | null;
 }
 
 export interface EditPokemonCardType {
@@ -24,6 +24,7 @@ export interface PokemonCardType {
   rarity: string;
   weakness: string | null;
   resistance: string | null;
+  imageUrl?: string | null;
 }
 
 export interface PokemonCardsResponse {

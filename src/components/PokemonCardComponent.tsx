@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { PokemonCardType } from "@/common/types";
 
 interface PokemonCardProps {
@@ -6,8 +7,17 @@ interface PokemonCardProps {
 }
 
 const PokemonCardComponent: React.FC<PokemonCardProps> = ({ card }) => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(`/pokemon/${card.id}`);
+  };
+
   return (
-    <div className="flex h-96 w-60 flex-col items-center justify-between rounded-lg border p-4 shadow-md">
+    <div
+      onClick={handleClick}
+      className="flex h-96 w-60 cursor-pointer flex-col items-center justify-between rounded-lg border p-4 shadow-md"
+    >
       <div className="mb-2 flex w-full items-center justify-between">
         <h2 className="text-lg font-bold">{card.name}</h2>
         <span className="text-sm">{card.hp} HP</span>

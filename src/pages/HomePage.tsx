@@ -21,7 +21,7 @@ const HomePage: React.FC = () => {
 
   return (
     <div className="mx-auto p-4">
-      <h1 className="mb-4 text-2xl font-bold">Pokemon List</h1>
+      <h1 className="mb-4 text-2xl font-bold">Pokemon App</h1>
       <input
         type="text"
         value={query}
@@ -37,14 +37,14 @@ const HomePage: React.FC = () => {
       </button>
       {showAddPokemon && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="rounded-lg bg-white p-6">
-            <AddPokemon />
+          <div className="relative rounded-lg bg-white">
             <button
-              className="mt-4 rounded-lg bg-red-600 px-4 py-2 font-semibold text-white hover:bg-red-500"
+              className="absolute right-2 top-2 text-gray-600 hover:text-gray-800"
               onClick={() => setShowAddPokemon(false)}
             >
-              Close
+              &times;
             </button>
+            <AddPokemon />
           </div>
         </div>
       )}
