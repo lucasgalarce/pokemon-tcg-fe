@@ -8,6 +8,7 @@ import { battle } from "../api/battle";
 const PokemonDetailsPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [selectedPokemon, setSelectedPokemon] = useState<string>("");
+  const [battleResult, setBattleResult] = useState<string>("");
 
   const { data, isLoading, isError } = useQuery<PokemonCardType>({
     queryKey: ["pokemon-card", id],
@@ -39,24 +40,24 @@ const PokemonDetailsPage: React.FC = () => {
         defenderId: selectedPokemon,
       };
       const response = await battle(battleData);
-      console.log("Battle Result:", response);
+      setBattleResult(`${response.message}`);
     } catch (error) {
       console.error("Error initiating battle:", error);
+      setBattleResult("Error initiating battle.");
     }
   };
 
   return (
     <div className="mx-auto flex items-center justify-center p-4">
       <div className="flex h-96 w-60 flex-col items-center rounded-lg border p-4 shadow-md">
-        <h1 className="mb-2 text-xl font-bold">{data.name}</h1>
+        <div className="mb-2 flex w-full items-center justify-between">
+          <h1 className="text-xl font-bold">{data.name}</h1>
+          <span className="text-sm">{data.hp} HP</span>
+        </div>
         <div className="mb-4">
           <img src={data.imageUrl} alt={data.name} className="mb-2 max-h-40" />
         </div>
         <div className="w-full">
-          <div className="mb-2 flex items-center">
-            <span className="mr-2 text-lg font-bold">HP:</span>
-            <span>{data.hp}</span>
-          </div>
           <div className="mb-2 flex items-center">
             <span className="mr-2 text-lg font-bold">Type:</span>
             <span>{data.type}</span>
@@ -94,6 +95,11 @@ const PokemonDetailsPage: React.FC = () => {
         >
           BATTLE!
         </button>
+        {battleResult && (
+          <div className="mt-4 rounded-lg border bg-gray-100 p-2 text-center">
+            {battleResult}
+          </div>
+        )}
       </div>
     </div>
   );

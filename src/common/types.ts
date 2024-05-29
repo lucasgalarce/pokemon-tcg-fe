@@ -58,10 +58,5 @@ export interface BattleType {
 }
 
 export interface BattleResponseType {
-  attackerId: string;
-  defenderId: string;
-  result?: {
-    winner: string;
-    loser: string;
-  };
+  message: string;
 }
