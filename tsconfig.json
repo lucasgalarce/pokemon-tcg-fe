@@ -6,14 +6,6 @@
     "module": "ESNext",
     "skipLibCheck": true,
 
-    "baseUrl": ".",
-    "paths": {
-      "src/*": ["./src/*"],
-      "components/*":["./src/components/*"],
-      "assets": ["./src/assets/*"],
-      "lib": ["./src/lib/*"],
-    },
-
     /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
@@ -26,7 +18,12 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]

@@ -1,5 +1,6 @@
-import HomePage from "src/pages/HomePage";
 import { createBrowserRouter } from "react-router-dom";
+import HomePage from "src/pages/HomePage";
+import LoginPage from "src/pages/LoginPage";
 import ErrorPage from "src/pages/ErrorPage";
 import Layout from "src/components/Layout";
 
@@ -11,6 +12,11 @@ export const router = createBrowserRouter([
         <HomePage />
       </Layout>
     ),
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/login",
+    element: <LoginPage />,
     errorElement: <ErrorPage />,
   },
 ]);
