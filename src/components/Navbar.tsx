@@ -17,7 +17,7 @@ const Navbar = () => {
               backgroundColor: "#F3C56E",
             }}
           >
-            <Link to="/">Inicio</Link>
+            <Link to="/">Home</Link>
           </li>
           {/* <li className="cursor-pointer rounded-lg border border-yellow-400 bg-yellow-400 px-4 py-1 text-gray-800 transition-all hover:scale-105 hover:bg-gray-800 hover:text-yellow-400 active:scale-95">
             <Link to="/about">Nosotros</Link>

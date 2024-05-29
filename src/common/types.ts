@@ -51,3 +51,17 @@ export interface RegisterData {
   username: string;
   password: string;
 }
+
+export interface BattleType {
+  attackerId: string;
+  defenderId: string;
+}
+
+export interface BattleResponseType {
+  attackerId: string;
+  defenderId: string;
+  result?: {
+    winner: string;
+    loser: string;
+  };
+}

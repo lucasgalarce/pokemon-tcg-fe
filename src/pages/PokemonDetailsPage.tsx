@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { fetchPokemonCardById, fetchPokemonCards } from "../api/pokemon-cards";
-import { PokemonCardType } from "../common/types";
+import { BattleType, PokemonCardType } from "../common/types";
+import { battle } from "../api/battle";
 
 const PokemonDetailsPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -26,8 +27,22 @@ const PokemonDetailsPage: React.FC = () => {
   if (isLoading) return <div>Loading...</div>;
   if (isError || !data) return <div>Error loading Pokemon card.</div>;
 
-  const handleBattle = () => {
-    console.log(`Battling ${data.name} with ${selectedPokemon}`);
+  const handleBattle = async () => {
+    if (!selectedPokemon) {
+      console.log("Please select a Pokemon to battle with.");
+      return;
+    }
+
+    try {
+      const battleData: BattleType = {
+        attackerId: id!,
+        defenderId: selectedPokemon,
+      };
+      const response = await battle(battleData);
+      console.log("Battle Result:", response);
+    } catch (error) {
+      console.error("Error initiating battle:", error);
+    }
   };
 
   return (
@@ -67,7 +82,7 @@ const PokemonDetailsPage: React.FC = () => {
           >
             <option value="">Select a Pokemon</option>
             {pokemonList?.data.map((pokemon) => (
-              <option key={pokemon.id} value={pokemon.name}>
+              <option key={pokemon.id} value={pokemon.id}>
                 {pokemon.name}
               </option>
             ))}
