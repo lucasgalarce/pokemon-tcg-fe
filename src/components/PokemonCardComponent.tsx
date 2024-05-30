@@ -22,9 +22,17 @@ const PokemonCardComponent: React.FC<PokemonCardProps> = ({ card }) => {
         <h2 className="text-lg font-bold">{card.name}</h2>
         <span className="text-sm">{card.hp} HP</span>
       </div>
-      {/* <div className="mb-2 flex h-40 w-full items-center justify-center bg-gray-200">
-        <img src={card.imageUrl} alt={card.name} className="max-h-full" />
-      </div> */}
+      <div className="mb-2 flex h-40 w-full items-center justify-center bg-gray-200">
+        {card.imageUrl ? (
+          <img
+            src={card.imageUrl}
+            alt={card.name}
+            className="h-full object-contain"
+          />
+        ) : (
+          <span>No Image Available</span>
+        )}
+      </div>
       <div className="w-full">
         <div className="mb-2 flex items-center">
           <div className="mr-2 h-4 w-4 rounded-full border"></div>

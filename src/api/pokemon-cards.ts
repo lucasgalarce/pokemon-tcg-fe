@@ -29,9 +29,13 @@ export const fetchPokemonCardById = async (
 };
 
 export const createPokemonCard = async (
-  data: CreatePokemonCardType,
-): Promise<CreatePokemonCardType> => {
-  const response = await api.post(`/pokemon-cards`, data);
+  data: FormData,
+): Promise<AxiosResponse<CreatePokemonCardType>> => {
+  const response = await api.post("/pokemon-cards", data, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
   return response.data;
 };
 
