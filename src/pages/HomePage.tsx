@@ -5,16 +5,19 @@ import { PokemonCardType } from "@/common/types";
 import PokemonCardComponent from "../components/PokemonCardComponent";
 import AddPokemon from "../components/AddPokemon";
 import useDebounce from "../hooks/useDebounce";
+import { PokemonType, PokemonExpansion } from "../common/enums";
 
 const HomePage: React.FC = () => {
   const [query, setQuery] = useState<string>("");
+  const [expansionQuery, setExpansionQuery] = useState<string>("");
+  const [typeQuery, setTypeQuery] = useState<string>("");
   const [showAddPokemon, setShowAddPokemon] = useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const debouncedQuery = useDebounce<string>(query, 500);
 
   const { data, isLoading, isError } = useQuery({
-    queryKey: ["pokemon-cards", debouncedQuery],
-    queryFn: () => fetchPokemonCards(debouncedQuery),
+    queryKey: ["pokemon-cards", debouncedQuery, expansionQuery, typeQuery],
+    queryFn: () => fetchPokemonCards(debouncedQuery, expansionQuery, typeQuery),
   });
 
   useEffect(() => {
@@ -29,14 +32,40 @@ const HomePage: React.FC = () => {
   return (
     <div className="mx-auto p-4">
       <h1 className="mb-4 text-2xl font-bold">Pokemon App</h1>
-      <input
-        ref={inputRef}
-        type="text"
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        placeholder="Search for a Pokemon"
-        className="mb-4 rounded border p-2"
-      />
+      <div className="mb-4 flex space-x-4">
+        <input
+          ref={inputRef}
+          type="text"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Search by Name"
+          className="rounded border p-2"
+        />
+        <select
+          value={expansionQuery}
+          onChange={(e) => setExpansionQuery(e.target.value)}
+          className="rounded border p-2"
+        >
+          <option value="">Select Expansion</option>
+          {Object.values(PokemonExpansion).map((expansion) => (
+            <option key={expansion} value={expansion}>
+              {expansion}
+            </option>
+          ))}
+        </select>
+        <select
+          value={typeQuery}
+          onChange={(e) => setTypeQuery(e.target.value)}
+          className="rounded border p-2"
+        >
+          <option value="">Type</option>
+          {Object.values(PokemonType).map((type) => (
+            <option key={type} value={type}>
+              {type}
+            </option>
+          ))}
+        </select>
+      </div>
       <button
         className="mb-4 rounded-lg bg-indigo-600 px-4 py-2 font-semibold text-white hover:bg-indigo-500"
         onClick={() => setShowAddPokemon(true)}

@@ -1,20 +1,19 @@
 import { AxiosResponse } from "axios";
 import { instance as api } from "./index";
-import {
-  PokemonCardsResponse,
-  PokemonCardType,
-  CreatePokemonCardType,
-} from "@/common/types";
+import { PokemonCardType, CreatePokemonCardType } from "@/common/types";
 
 export const fetchPokemonCards = async (
-  name: string | null,
-): Promise<PokemonCardsResponse> => {
-  const response: AxiosResponse<PokemonCardsResponse> = await api.get(
-    "/pokemon-cards",
-    {
-      params: { name },
+  name?: string | undefined,
+  expansion?: string | undefined,
+  type?: string | undefined,
+) => {
+  const response = await api.get("/pokemon-cards", {
+    params: {
+      name,
+      expansion,
+      type,
     },
-  );
+  });
   return response.data;
 };
 
