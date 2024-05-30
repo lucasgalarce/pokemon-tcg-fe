@@ -54,8 +54,16 @@ const PokemonDetailsPage: React.FC = () => {
           <h1 className="text-xl font-bold">{data.name}</h1>
           <span className="text-sm">{data.hp} HP</span>
         </div>
-        <div className="mb-4">
-          <img src={data.imageUrl} alt={data.name} className="mb-2 max-h-40" />
+        <div className="mb-2 flex h-40 w-full items-center justify-center bg-gray-200">
+          {data.imageUrl ? (
+            <img
+              src={data.imageUrl}
+              alt={data.name}
+              className="h-full object-contain"
+            />
+          ) : (
+            <span>No Image Available</span>
+          )}
         </div>
         <div className="w-full">
           <div className="mb-2 flex items-center">

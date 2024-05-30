@@ -3,7 +3,11 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createPokemonCard } from "../api/pokemon-cards";
 import { PokemonType, PokemonExpansion, PokemonRarity } from "../common/enums";
 
-const AddPokemon: React.FC = () => {
+interface AddPokemonProps {
+  onClose: () => void;
+}
+
+const AddPokemon: React.FC<AddPokemonProps> = ({ onClose }) => {
   const [name, setName] = useState("");
   const [hp, setHp] = useState<string>("");
   const [type, setType] = useState<PokemonType>(PokemonType.WATER);
@@ -16,6 +20,7 @@ const AddPokemon: React.FC = () => {
   const [resistance, setResistance] = useState<PokemonType | null>(null);
   const [image, setImage] = useState<File | null>(null);
   const queryClient = useQueryClient();
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   const mutation = useMutation({
     mutationFn: async (createPokemonCardData: FormData) => {
@@ -23,14 +28,18 @@ const AddPokemon: React.FC = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["pokemon-cards"] });
+      setIsSubmitting(false);
+      onClose();
     },
     onError: (error: unknown) => {
       console.log(error);
+      setIsSubmitting(false);
     },
   });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    setIsSubmitting(true);
     const formData = new FormData();
     formData.append("name", name);
     formData.append("hp", hp);
@@ -197,8 +206,9 @@ const AddPokemon: React.FC = () => {
       <button
         type="submit"
         className="w-full rounded-lg bg-indigo-600 px-4 py-2 font-semibold text-white hover:bg-indigo-500 sm:col-span-2"
+        disabled={isSubmitting}
       >
-        Add Pokemon
+        {isSubmitting ? "Adding..." : "Add Pokemon"}
       </button>
     </form>
   );

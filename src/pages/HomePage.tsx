@@ -14,8 +14,6 @@ const HomePage: React.FC = () => {
     queryFn: () => fetchPokemonCards(query),
   });
 
-  console.log(data);
-
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error loading Pokemon cards.</div>;
 
@@ -36,15 +34,17 @@ const HomePage: React.FC = () => {
         Add Pokemon
       </button>
       {showAddPokemon && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="relative rounded-lg bg-white">
+        <div
+          className={`fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 transition-opacity duration-300 ${showAddPokemon ? "show" : ""}`}
+        >
+          <div className="relative transform rounded-lg bg-white p-4 shadow-lg transition-transform duration-300">
             <button
               className="absolute right-2 top-2 text-gray-600 hover:text-gray-800"
               onClick={() => setShowAddPokemon(false)}
             >
               &times;
             </button>
-            <AddPokemon />
+            <AddPokemon onClose={() => setShowAddPokemon(false)} />
           </div>
         </div>
       )}
