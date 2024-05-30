@@ -4,7 +4,6 @@ import {
   PokemonCardsResponse,
   PokemonCardType,
   CreatePokemonCardType,
-  EditPokemonCardType,
 } from "@/common/types";
 
 export const fetchPokemonCards = async (

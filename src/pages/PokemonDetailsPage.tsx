@@ -90,11 +90,14 @@ const PokemonDetailsPage: React.FC = () => {
             onChange={(e) => setSelectedPokemon(e.target.value)}
           >
             <option value="">Select a Pokemon</option>
-            {pokemonList?.data.map((pokemon) => (
-              <option key={pokemon.id} value={pokemon.id}>
-                {pokemon.name}
-              </option>
-            ))}
+            {pokemonList?.data.map(
+              (pokemon) =>
+                pokemon.id.toString() !== id && (
+                  <option key={pokemon.id} value={pokemon.id}>
+                    {pokemon.name}
+                  </option>
+                ),
+            )}
           </select>
         </div>
         <button

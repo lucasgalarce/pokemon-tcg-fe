@@ -1,18 +1,27 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { fetchPokemonCards } from "../api/pokemon-cards";
 import { PokemonCardType } from "@/common/types";
 import PokemonCardComponent from "../components/PokemonCardComponent";
 import AddPokemon from "../components/AddPokemon";
+import useDebounce from "../hooks/useDebounce";
 
 const HomePage: React.FC = () => {
   const [query, setQuery] = useState<string>("");
   const [showAddPokemon, setShowAddPokemon] = useState<boolean>(false);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const debouncedQuery = useDebounce<string>(query, 500);
 
   const { data, isLoading, isError } = useQuery({
-    queryKey: ["pokemon-cards", query],
-    queryFn: () => fetchPokemonCards(query),
+    queryKey: ["pokemon-cards", debouncedQuery],
+    queryFn: () => fetchPokemonCards(debouncedQuery),
   });
+
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, []);
 
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error loading Pokemon cards.</div>;
@@ -21,6 +30,7 @@ const HomePage: React.FC = () => {
     <div className="mx-auto p-4">
       <h1 className="mb-4 text-2xl font-bold">Pokemon App</h1>
       <input
+        ref={inputRef}
         type="text"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
