@@ -83,7 +83,9 @@ const PokemonDetailsPage: React.FC = () => {
       <div className="ml-4 flex flex-col items-center p-4">
         <h2 className="mb-4 text-xl font-bold">Battle with:</h2>
         <div className="mb-4 flex items-center">
-          <span className="mr-2 text-lg font-bold">VS</span>
+          <span className="mr-2 flex h-10 w-10 items-center justify-center rounded-full bg-red-600 text-lg font-bold text-white">
+            VS
+          </span>
           <select
             className="rounded-lg border p-2"
             value={selectedPokemon}
