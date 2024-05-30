@@ -22,7 +22,7 @@ const PokemonDetailsPage: React.FC = () => {
 
   const { data: pokemonList } = useQuery({
     queryKey: ["pokemon-cards"],
-    queryFn: () => fetchPokemonCards(null),
+    queryFn: () => fetchPokemonCards(),
   });
 
   if (isLoading) return <div>Loading...</div>;
@@ -93,7 +93,7 @@ const PokemonDetailsPage: React.FC = () => {
           >
             <option value="">Select a Pokemon</option>
             {pokemonList?.data.map(
-              (pokemon) =>
+              (pokemon: PokemonCardType) =>
                 pokemon.id.toString() !== id && (
                   <option key={pokemon.id} value={pokemon.id}>
                     {pokemon.name}

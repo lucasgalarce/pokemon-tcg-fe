@@ -12,7 +12,7 @@ const HomePage: React.FC = () => {
   const [expansionQuery, setExpansionQuery] = useState<string>("");
   const [typeQuery, setTypeQuery] = useState<string>("");
   const [page, setPage] = useState<number>(0);
-  const [pageSize, setPageSize] = useState<number>(8);
+  const [pageSize] = useState<number>(8);
   const [showAddPokemon, setShowAddPokemon] = useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const debouncedQuery = useDebounce<string>(query, 500);
