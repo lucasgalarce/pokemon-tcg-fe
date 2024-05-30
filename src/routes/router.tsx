@@ -4,6 +4,7 @@ import LoginPage from "src/pages/LoginPage";
 import ErrorPage from "src/pages/ErrorPage";
 import Layout from "src/components/Layout";
 import PokemonDetailsPage from "src/pages/PokemonDetailsPage";
+import SignUpPage from "src/pages/SignUpPage";
 
 export const router = createBrowserRouter([
   {
@@ -18,6 +19,11 @@ export const router = createBrowserRouter([
   {
     path: "/login",
     element: <LoginPage />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/signup",
+    element: <SignUpPage />,
     errorElement: <ErrorPage />,
   },
   {

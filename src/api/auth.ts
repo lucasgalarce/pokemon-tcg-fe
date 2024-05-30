@@ -10,9 +10,9 @@ export const login = async (data: LoginData): Promise<AuthResponse> => {
   return response.data;
 };
 
-export const register = async (data: RegisterData): Promise<AuthResponse> => {
+export const signup = async (data: RegisterData): Promise<AuthResponse> => {
   const response: AxiosResponse<AuthResponse> = await api.post(
-    "/auth/register",
+    "/auth/sign-up",
     data,
   );
   return response.data;
