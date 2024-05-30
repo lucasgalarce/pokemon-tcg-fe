@@ -1,8 +1,8 @@
-import { useState, FormEvent } from "react";
+import { useState, FormEvent, useEffect } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { login } from "../api/auth";
-import { Loader2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/authContext";
 
 interface LoginData {
   username: string;
@@ -15,6 +15,7 @@ const LoginPage = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
   const navigate = useNavigate();
+  const { isAuthenticated, login: authLogin } = useAuth();
 
   const mutation = useMutation({
     mutationFn: async (data: LoginData) => {
@@ -22,11 +23,9 @@ const LoginPage = () => {
       return response;
     },
     onSuccess: (data) => {
-      console.log("Login successful:", data);
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("refreshToken", data.refreshToken);
       setIsLoading(false);
-      navigate("/"); // Redirige a la ruta principal
+      authLogin(data.token);
+      navigate("/");
     },
     onError: (error: Error) => {
       console.error("Login failed:", error);
@@ -42,11 +41,17 @@ const LoginPage = () => {
     mutation.mutate({ username, password });
   };
 
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/");
+    }
+  }, [isAuthenticated, navigate]);
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-100">
       <div className="w-full max-w-md rounded bg-white p-8 shadow-md">
         <h2 className="mb-6 text-center text-3xl font-semibold text-gray-700">
-          Login
+          Pokemon App Login
         </h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">

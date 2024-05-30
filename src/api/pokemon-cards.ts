@@ -3,15 +3,19 @@ import { instance as api } from "./index";
 import { PokemonCardType, CreatePokemonCardType } from "@/common/types";
 
 export const fetchPokemonCards = async (
-  name?: string | undefined,
-  expansion?: string | undefined,
-  type?: string | undefined,
+  name?: string,
+  expansion?: string,
+  type?: string,
+  page: number = 0,
+  pageSize: number = 8,
 ) => {
   const response = await api.get("/pokemon-cards", {
     params: {
       name,
       expansion,
       type,
+      page,
+      pageSize,
     },
   });
   return response.data;

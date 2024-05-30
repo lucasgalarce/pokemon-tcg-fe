@@ -1,4 +1,3 @@
-import Footer from "./Footer";
 import Navbar from "./Navbar";
 
 interface LayoutProps {
@@ -10,7 +9,6 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     <div className="mx-auto flex h-screen flex-col justify-between">
       <Navbar></Navbar>
       <main className="flex h-full">{children}</main>
-      <Footer />
     </div>
   );
 };
