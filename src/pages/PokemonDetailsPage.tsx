@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchPokemonCardById, fetchPokemonCards } from "../api/pokemon-cards";
 import { BattleType, PokemonCardType } from "../common/types";
 import { battle } from "../api/battle";
+import PokemonCardComponent from "../components/PokemonCardComponent";
 
 const PokemonDetailsPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -48,44 +49,14 @@ const PokemonDetailsPage: React.FC = () => {
   };
 
   return (
-    <div className="mx-auto flex items-center justify-center p-4">
-      <div className="flex h-96 w-60 flex-col items-center rounded-lg border p-4 shadow-md">
-        <div className="mb-2 flex w-full items-center justify-between">
-          <h1 className="text-xl font-bold">{data.name}</h1>
-          <span className="text-sm">{data.hp} HP</span>
-        </div>
-        <div className="mb-2 flex h-40 w-full items-center justify-center bg-gray-200">
-          {data.imageUrl ? (
-            <img
-              src={data.imageUrl}
-              alt={data.name}
-              className="h-full object-contain"
-            />
-          ) : (
-            <span>No Image Available</span>
-          )}
-        </div>
-        <div className="w-full">
-          <div className="mb-2 flex items-center">
-            <span className="mr-2 text-lg font-bold">Type:</span>
-            <span>{data.type}</span>
-          </div>
-          <div className="mb-2 flex items-center">
-            <span className="mr-2 text-lg font-bold">Expansion:</span>
-            <span>{data.expansion}</span>
-          </div>
-          <div className="mb-2 flex items-center">
-            <span className="mr-2 text-lg font-bold">Rarity:</span>
-            <span>{data.rarity}</span>
-          </div>
-        </div>
-      </div>
-      <div className="ml-4 flex flex-col items-center p-4">
+    <div className="mx-auto flex items-center justify-center gap-x-8 ">
+      <PokemonCardComponent key={data.id} card={data} />
+      <span className="flex h-10 w-10 items-center justify-center rounded-full  bg-red-600 text-lg font-bold text-white">
+        VS
+      </span>
+      <div className="flex flex-col items-center ">
         <h2 className="mb-4 text-xl font-bold">Battle with:</h2>
         <div className="mb-4 flex items-center">
-          <span className="mr-2 flex h-10 w-10 items-center justify-center rounded-full bg-red-600 text-lg font-bold text-white">
-            VS
-          </span>
           <select
             className="rounded-lg border p-2"
             value={selectedPokemon}

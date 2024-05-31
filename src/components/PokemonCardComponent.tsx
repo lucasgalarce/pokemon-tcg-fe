@@ -16,34 +16,32 @@ const PokemonCardComponent: React.FC<PokemonCardProps> = ({ card }) => {
   return (
     <div
       onClick={handleClick}
-      className="flex h-96 w-60 cursor-pointer flex-col items-center justify-between rounded-lg border p-4 shadow-md"
+      className="flex w-60 cursor-pointer flex-col items-center justify-center gap-y-4 rounded-lg border p-4 shadow-md"
     >
-      <div className="mb-2 flex w-full items-center justify-between">
+      <div className="flex w-full items-center justify-between">
         <h2 className="text-lg font-bold">{card.name}</h2>
         <span className="text-sm">{card.hp} HP</span>
       </div>
-      <div className="mb-2 flex h-40 w-full items-center justify-center bg-gray-200">
-        {card.imageUrl ? (
+      <div className="relative flex h-40 w-full items-center justify-center overflow-hidden rounded-md">
+        {card?.imageUrl && (
           <img
             src={card.imageUrl}
             alt={card.name}
-            className="h-full object-contain"
+            className="absolute inset-0 h-full w-full object-cover object-top"
           />
-        ) : (
-          <span>No Image Available</span>
         )}
       </div>
       <div className="w-full">
-        <div className="mb-2 flex items-center">
-          <div className="mr-2 h-4 w-4 rounded-full border"></div>
+        <div className="flex items-center gap-x-2">
+          <div className="h-4 w-4 rounded-full border"></div>
           <span>Type: {card.type}</span>
         </div>
-        <div className="mb-2 flex items-center">
-          <div className="mr-2 h-4 w-4 rounded-full border"></div>
+        <div className="flex items-center gap-x-2">
+          <div className="h-4 w-4 rounded-full border"></div>
           <span>Expansion: {card.expansion}</span>
         </div>
-        <div className="flex items-center">
-          <div className="mr-2 h-4 w-4 rounded border"></div>
+        <div className="flex items-center gap-x-2">
+          <div className="h-4 w-4 rounded border"></div>
           <span>Rarity: {card.rarity}</span>
         </div>
       </div>

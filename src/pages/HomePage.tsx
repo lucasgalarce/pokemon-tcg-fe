@@ -102,14 +102,14 @@ const HomePage: React.FC = () => {
       </button>
       {showAddPokemon && (
         <div
-          className={`fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 transition-opacity duration-300 ${showAddPokemon ? "show" : ""}`}
+          className={`fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 transition-opacity duration-300 ${showAddPokemon ? "show" : ""}`}
         >
           <div className="relative transform rounded-lg bg-white p-4 shadow-lg transition-transform duration-300">
             <button
-              className="absolute right-2 top-2 text-gray-600 hover:text-gray-800"
+              className="absolute right-3 top-1 text-gray-600 hover:text-gray-800"
               onClick={() => setShowAddPokemon(false)}
             >
-              &times;
+              <span className="text-4xl">&times;</span>
             </button>
             <AddPokemon onClose={() => setShowAddPokemon(false)} />
           </div>
