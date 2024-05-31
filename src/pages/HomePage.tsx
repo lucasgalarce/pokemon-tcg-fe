@@ -6,6 +6,8 @@ import PokemonCardComponent from "../components/PokemonCardComponent";
 import AddPokemon from "../components/AddPokemon";
 import useDebounce from "../hooks/useDebounce";
 import { PokemonType, PokemonExpansion } from "../common/enums";
+import { useAuth } from "../context/authContext";
+import { useNavigate } from "react-router-dom";
 
 const HomePage: React.FC = () => {
   const [query, setQuery] = useState<string>("");
@@ -16,6 +18,8 @@ const HomePage: React.FC = () => {
   const [showAddPokemon, setShowAddPokemon] = useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const debouncedQuery = useDebounce<string>(query, 500);
+  const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
 
   const { data, isLoading, isError } = useQuery({
     queryKey: [
@@ -51,6 +55,12 @@ const HomePage: React.FC = () => {
       setPage((prevPage) => prevPage + 1);
     }
   };
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate("/login");
+    }
+  }, [isAuthenticated, navigate]);
 
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error loading Pokemon cards.</div>;
