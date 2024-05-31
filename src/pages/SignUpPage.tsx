@@ -1,6 +1,6 @@
 import { useState, FormEvent, useEffect } from "react";
 import { useMutation } from "@tanstack/react-query";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { signup } from "../api/auth";
 import { useAuth } from "../context/authContext";
 
@@ -117,6 +117,12 @@ const SignUpPage = () => {
             </p>
           )}
         </form>
+        <p className="mt-4 text-center text-sm text-gray-600">
+          Do you already have an account?{" "}
+          <Link to="/login" className="text-indigo-600 hover:underline">
+            Login
+          </Link>
+        </p>
       </div>
     </div>
   );
