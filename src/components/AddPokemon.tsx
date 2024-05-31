@@ -16,7 +16,7 @@ const AddPokemon: React.FC<AddPokemonProps> = ({ onClose }) => {
   );
   const [rarity, setRarity] = useState<PokemonRarity>(PokemonRarity.RARE);
   const [originalAttackDmg, setOriginalAttackDmg] = useState<string>("");
-  const [weakness, setWeakness] = useState<PokemonType | null>(null);
+  const [weakness, setWeakness] = useState<PokemonType>(PokemonType.COLORLESS);
   const [resistance, setResistance] = useState<PokemonType | null>(null);
   const [image, setImage] = useState<File | null>(null);
   const queryClient = useQueryClient();
@@ -156,10 +156,12 @@ const AddPokemon: React.FC<AddPokemonProps> = ({ onClose }) => {
           Weakness
         </label>
         <select
-          value={weakness || ""}
+          value={weakness}
           onChange={(e) =>
             setWeakness(
-              e.target.value === "" ? null : (e.target.value as PokemonType),
+              e.target.value === ""
+                ? PokemonType.COLORLESS
+                : (e.target.value as PokemonType),
             )
           }
           className="w-full rounded-lg border px-3 py-2"
@@ -196,10 +198,18 @@ const AddPokemon: React.FC<AddPokemonProps> = ({ onClose }) => {
         <label className="mb-2 block text-sm font-medium text-gray-600">
           Image
         </label>
+
+        <label
+          className={`flex h-[40px] w-[150px] cursor-pointer items-center justify-center rounded-md  font-semibold text-white transition-all active:scale-95 ${image ? "bg-green-500  hover:bg-green-400" : "bg-indigo-600/70 hover:bg-indigo-600/50"}`}
+          htmlFor="imageFile"
+        >
+          {image ? "Uploaded!" : "Upload Image"}
+        </label>
         <input
+          id="imageFile"
           type="file"
           onChange={(e) => setImage(e.target.files?.[0] || null)}
-          className="w-full rounded-lg border px-3 py-2"
+          className="hidden w-full rounded-lg border px-3 py-2"
         />
       </div>
       <button
